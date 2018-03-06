@@ -4,7 +4,7 @@ MAINTAINER ilpan<pna.dev@outlook.com>
 # add user hdp
 RUN groupadd -r hadoop && useradd -r hdp -g hadoop -d /home/hdp && \ 
         mkdir /home/hdp && chmod -R /home/hdp hdp:hadoop && \ 
-        sed -i '/root.*ALL=(ALL.*).*ALL/a\hdp    ALL=(ALL)    ALL' && \ 
+        sed -i '/root.*ALL=(ALL.*).*ALL/a\hdp    ALL=(ALL)    ALL' /etc/sudoers && \ 
         echo hdp:123456 | chpasswd && \
         chmod 666 /etc/hosts
 USER hdp
