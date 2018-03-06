@@ -9,7 +9,7 @@ fi
 hadoops=("hadoop-master" "hadoop-slave1" "hadoop-slave2" "hadoop-slave3")
 for hadoop in ${hadoops[@]}
 do
-docker start ${docker}
+    docker start ${hadoop}
 done
 
 # 直接进入hadoop-master

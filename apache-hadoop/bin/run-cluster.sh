@@ -38,49 +38,13 @@ docker run -d --net hadoop-network --ip hadoop-slave1-ip -P --name hadoop-slave2
 docker run -d --net hadoop-network --ip hadoop-slave3-ip -P --name hadoop-slave3 -h hadoop-slave3 -v /data/hadoop-slave3/data:/data ilpan/apache-hadoop
 
 
-function ssh_configure() {
-    ssh-keygen -t rsa
-    if [ !-f ${USER}/.ssh/authorized_keys ]; then
-        touch ${USER}/.ssh/authorized_keys
-    fi
-    chmod 700 ${USER}/.ssh && chmod 600 ${USER}/.ssh/id_rsa && chmod 644 ${USER}/.ssh/authorized_keys 
-}
 
-
-# 4)更新配置文件:/etc/hosts
+# 4)在容器内进行相关配置
 hadoops=("hadoop-master" "hadoop-slave1" "hadoop-slave2" "hadoop-slave3")
-docker exec -it hadoop-master /bin/bash
-ssh_configure
-
-echo -n "${hadoop-salve1-ip}  ${hadoop-slave1}\n${hadoop-slave2-ip}  ${hadoop-slave2}\n${hadoop-slave3}  ${hadoop-salve3}\n" >> /etc/hosts
-
-# 尚未验证此写法可行性(进入进入容器并在容器中操作后退出)
-for slaves in ${hadoops:1}
+for hadoop in ${hadoops[@]}
 do
-    ssh-copy-id -i ${hadoop}
-    scp /etc/hosts hdp@${hadoop}:/etc/hosts
-done
-
-# ssh-copy-id -i hadoop-slave1
-# ssh-copy-id -i hadoop-slave2
-# ssh-copy-id -i hadoop-slave3
-exit
-
-
-# 5)设置容器间免密登录
-# hadoop-master在上已配
-# hadoop-slaves
-for hadoop-slave in ${hadoops:1}
-do
-    docker exec -it ${hadoop-slave} /bin/bash
-    ssh_configure
-    for hadoop in ${hadoops[@]}
-    do
-        if [ ${hadoop} != "hadoop-slave1" ]; then
-            ssh-copy-id -i ${hadoop}
-        fi
-    done
-    exit
+    docker cp ./run-in-docker.sh ${hadoop}:${USER}/
+    docker exec -d ${hadoop} ~/run-in-docker.sh
 done
 
 # 6)初始化hdfs并启动集群
