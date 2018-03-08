@@ -10,9 +10,10 @@ hadoops=("hadoop-master" "hadoop-slave1" "hadoop-slave2" "hadoop-slave3")
 for hadoop in ${hadoops[@]}
 do
     docker start ${hadoop}
+    docker exec -it ${hadoop} /bin/bash -c "sudo /usr/sbin/sshd"
 done
 
-# 直接进入hadoop-master
-docker exec -it hadoop-master /bin/bash
+# 通过hadoop-master启动集群
+docker exec -it hadoop-master /bin/bash -c "source /home/hdp/.jenv/bin/jenv-init.sh && jenv cd hadoop && sbin/start-all.sh && jps"
 
 # 相关操作提示符

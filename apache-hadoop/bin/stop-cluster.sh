@@ -9,7 +9,7 @@ fi
 hadoops=("hadoop-master" "hadoop-slave1" "hadoop-slave2" "hadoop-slave3")
 for hadoop in ${hadoops[@]}
 do
-docker stop ${docker}
+docker stop ${hadoop}
 done
 
 echo "成功关闭集群"
