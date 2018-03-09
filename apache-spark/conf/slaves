@@ -17,5 +17,9 @@
 
 # A Spark Worker will be started on each of the machines listed below.
 
-spark-worker1
-spark-worker2
+# Maybe we can alias hostname in /etc/hosts
+# eg : alias hadoop-master for spark-master
+# use hostname hadoop-* here just for matching the hadoop configuration files
+hadoop-slave1
+hadoop-slave2
+hadoop-slave3

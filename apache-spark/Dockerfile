@@ -1,6 +1,6 @@
 # apache spark
 
-FROM ilpan/base-hadoop
+FROM ilpan/apache-hadoop
 MAINTAINER ilpan<pna.dev@outlook.com>
 
 ENV CANDIDATES /usr/local/.jenv/candidates

@@ -42,7 +42,7 @@ function login_without_passwd() {
     docker exec -it hbase-master bash -c "ssh-copy-id hadoop-slave1 && ssh-copy-id hadoop-slave2 && ssh-copy-id hadoop-slave3"
     docker exec -it hbase-regionserver1 bash -c "ssh-copy-id hadoop-master && ssh-copy-id hadoop-slave2 && ssh-copy-id hadoop-slave3"
     docker exec -it hbase-regionserver2 bash -c "ssh-copy-id hadoop-master && ssh-copy-id hadoop-slave1 && ssh-copy-id hadoop-slave3"
-    docker exec -it hbase-regionserver3 bash -c "ssh-copy-id hmaster && ssh-copy-id hregionserver1 && ssh-copy-id hregionserver2"
+    docker exec -it hbase-regionserver3 bash -c "ssh-copy-id hadoop-master && ssh-copy-id hadoop-master && ssh-copy-id hadoop-slave2"
 }
 
 function start_daemon() {
