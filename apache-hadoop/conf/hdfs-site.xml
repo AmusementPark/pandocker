@@ -42,4 +42,12 @@
         <name>dfs.replication</name>
         <value>3</value>
     </property>
+
+    <property>
+        <name>dfs.datanode.max.transfer.threads</name>
+        <value>4096</value>
+        <description>
+        An HDFS DataNode has an upper bound on the number of files that it will serve at any one time.
+        </description>
+    </property>
 </configuration>
