@@ -1,7 +1,7 @@
 #!/bin/bash
 
 print_usage() {
-    echo "Run spark distributed cluster based on hdfs with Zookeeper on docker use docker-compose"
+    echo "Run Spark distributed cluster based on hdfs and YARN on docker use docker-compose"
     echo ""
     echo "Usage: $0 [init|start|stop|remove]"
     echo ""
@@ -28,7 +28,9 @@ sparks=("spark-master" "spark-worker1" "spark-worker2" "spark-worker3")
 function login_without_passwd() {
     for spark in ${sparks[@]}
     do
-        sudo mkdir -p /data/
+        # 顺便做些相关设置
+        docker exec -it ${spark} bash -c "sudo mkdir -p /data/ && sudo chown -R hdp:hadoop /data/"
+        docker exec -it ${spark} bash -c "sudo sed -i 's/#.*StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/ssh_config && sudo sed -i 's/#.*PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config"
         docker exec -it ${spark} bash -c "ssh-keygen -t rsa -P '' &&  chmod 700 /home/hdp/.ssh && chmod 600 /home/hdp/.ssh/id_rsa && cat /home/hdp/.ssh/id_rsa.pub >> /home/hdp/.ssh/authorized_keys && chmod 644 /home/hdp/.ssh/authorized_keys"
     done
     # hadoop-master & hadoop-slave* 是主机名，为了与 ilpan/apache-hadoop中的配置一致 (虽然也可以修改)

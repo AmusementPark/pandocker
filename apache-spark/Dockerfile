@@ -4,7 +4,7 @@ FROM ilpan/apache-hadoop
 MAINTAINER ilpan<pna.dev@outlook.com>
 
 ENV CANDIDATES /usr/local/.jenv/candidates
-ENV SPARK_HOME $SOURCE_HOME/spark/current/
+ENV SPARK_HOME $CANDIDATES/spark/current/
 
 RUN cd /tmp && \
         wget -c http://mirrors.hust.edu.cn/apache/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz && \
