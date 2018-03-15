@@ -1,0 +1,79 @@
+version: '3'
+services:
+    zk0:
+        image: ilpan/apache-zookeeper
+        container_name: zk0
+        command: "sudo /usr/sbin/sshd -D"
+        tty: true
+        stdin_open: true
+        volumes:
+            # 映射 zookpeper 数据和配置文件
+            - /data/zookeeper/zk0:/data/zookeeper/
+            - ../conf:/usr/local/.jenv/candidates/zookeeper/current/conf/
+        ports:
+            # zookeeper 相关端口映射
+            - "2181"
+            - "2888"
+            - "3888"
+        hostname: zk0
+        extra_hosts:
+            - "zk1: 172.21.1.11"
+            - "zk2: 172.21.1.12"
+        networks:
+            zookeeper-network:
+                ipv4_address: 172.21.1.10
+                aliases:
+                    - zk0
+        depends_on:
+            - zk1
+            - zk2
+    zk1:
+        image: ilpan/apache-zookeeper
+        container_name: zk1
+        command: "sudo /usr/sbin/sshd -D"
+        tty: true
+        stdin_open: true
+        volumes:
+            - /data/zookeeper/zk1:/data/zookeeper/
+            - ../conf:/usr/local/.jenv/candidates/zookeeper/current/conf/
+        ports:
+            - "2181"
+            - "2888"
+            - "3888"
+        hostname: zk1
+        extra_hosts:
+            - "zk0: 172.21.1.10"
+            - "zk2: 172.21.1.12"
+        networks:
+            zookeeper-network:
+                ipv4_address: 172.21.1.11
+                aliases:
+                    - zk1
+    zk2:
+        image: ilpan/apache-zookeeper
+        container_name: zk2
+        command: "sudo /usr/sbin/sshd -D"
+        tty: true
+        stdin_open: true
+        volumes:
+            - /data/zookeeper/zk2:/data/zookeeper
+            - ../conf:/usr/local/.jenv/candidates/zookeeper/current/conf
+        ports:
+            - "2181"
+            - "2888"
+            - "3888"
+        hostname: zk2
+        extra_hosts:
+            - "zk0: 172.21.1.10"
+            - "zk1: 172.21.1.11"
+        networks:
+            zookeeper-network:
+                ipv4_address: 172.21.1.12
+                aliases:
+                    - zk2
+networks:
+    zookeeper-network:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.21.1.0/24

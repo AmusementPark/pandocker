@@ -35,11 +35,21 @@
         <description>The directory shared by RegionServers</description>
     </property>
     <property>
+        <name>hbase.zookeeper.property.clientPort</name>
+        <value>2181</value>
+        <description>连接到zookeeper的端口，默认为2181</description>
+    </property>
+    <property>
         <name>hbase.cluster.distributed</name>
         <value>true</value>
         <description>
             true: fully-distributed with unmanaged Zookeeper Quorum (see hbase-env.sh)
         </description>
+    </property>
+    <property>
+        <name>hbase.master</name>
+        <value>hadoop-master</value>
+        <description>指定 HBase 集群主控节点</description>
     </property>
     <property>
         <name>hbase.tmp.dir</name>

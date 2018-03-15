@@ -30,7 +30,8 @@ function login_without_passwd() {
     do
         # 顺便做些相关设置
         docker exec -it ${spark} bash -c "sudo mkdir -p /data/ && sudo chown -R hdp:hadoop /data/"
-        docker exec -it ${spark} bash -c "sudo sed -i 's/#.*StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/ssh_config && sudo sed -i 's/#.*PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config"
+        docker exec -it ${spark} bash -c "sudo sed -i 's/#.*StrictHostKeyChecking ask/StrictHostKeyChecking no/ /etc/ssh/sshd_config'"
+        # docker exec -it ${spark} bash -c "sudo sed -i 's/#.*PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config"
         docker exec -it ${spark} bash -c "ssh-keygen -t rsa -P '' &&  chmod 700 /home/hdp/.ssh && chmod 600 /home/hdp/.ssh/id_rsa && cat /home/hdp/.ssh/id_rsa.pub >> /home/hdp/.ssh/authorized_keys && chmod 644 /home/hdp/.ssh/authorized_keys"
     done
     # hadoop-master & hadoop-slave* 是主机名，为了与 ilpan/apache-hadoop中的配置一致 (虽然也可以修改)
