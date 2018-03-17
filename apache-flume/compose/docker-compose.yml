@@ -1,0 +1,84 @@
+version: '3'
+services:
+    flume-tier1-1:
+        image: ilpan/apache-flume
+        container_name: flume-tier1-1
+        command: "sudo /usr/sbin/sshd -D"
+        tty: true
+        stdin_open: true
+        volumes:
+            - ../conf:/usr/local/.jenv/candidates/flume/current/conf
+        ports:
+            - "2018"
+        hostname: flume-tier1-1
+        networks:
+            cluster-network:
+                aliases:
+                    - flume-tier1-1
+    flume-tier1-2:
+        image: ilpan/apache-flume
+        container_name: flume-tier1-2
+        command: "sudo /usr/sbin/sshd -D"
+        tty: true
+        stdin_open: true
+        volumes:
+            - ../conf:/usr/local/.jenv/candidates/flume/current/conf/
+        ports:
+            - "2018"
+        hostname: flume-tier1-2
+        networks:
+            cluster-network:
+                aliases:
+                    - flume-tier1-2
+    flume-tier1-3:
+        image: ilpan/apache-flume
+        container_name: flume-tier1-3
+        command: "sudo /usr/sbin/sshd -D"
+        tty: true
+        stdin_open: true
+        volumes:
+            - ../conf:/usr/local/.jenv/candidates/flume/current/conf
+        ports:
+            - "2018"
+        hostname: flume-tier1-3
+        networks:
+            cluster-network:
+                aliases:
+                    - flume-tier1-3
+
+    flume-tier2-1:
+        image: ilpan/apache-flume
+        container_name: flume-tier2-1
+        command: "sudo /usr/sbin/sshd -D"
+        tty: true
+        stdin_open: true
+        volumes:
+            - ../conf:/usr/local/.jenv/candidates/flume/current/conf
+        ports:
+            - "2018"
+        hostname: flume-tier2-1
+        networks:
+            cluster-network:
+                aliases:
+                    - flume-tier2-1
+    flume-tier2-2:
+        image: ilpan/apache-flume
+        container_name: flume-tier2-2
+        command: "sudo /usr/sbin/sshd -D"
+        tty: true
+        stdin_open: true
+        volumes:
+            - ../conf:/usr/local/.jenv/candidates/flume/current/conf/
+        ports:
+            - "2018"
+        hostname: flume-tier2-2
+        networks:
+            cluster-network:
+                aliases:
+                    - flume-tier2-2
+networks:
+    cluster-network:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.88.0.0/16

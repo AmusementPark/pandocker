@@ -23,11 +23,11 @@
 <configuration>
     <property>
         <name>hbase.zookeeper.quorum</name>
-        <value>hadoop-slave1,hadoop-slave2,hadoop-slave3</value>
+        <value>zk0, zk1, zk2</value>
     </property>
     <property>
         <name>hbase.zookeeper.property.dataDir</name>
-        <value>/data/hadoop/zookeeper/</value>
+        <value>/data/zookeeper/</value>
     </property>
     <property>
         <name>hbase.rootdir</name>

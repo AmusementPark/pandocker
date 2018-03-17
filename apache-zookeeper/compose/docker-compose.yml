@@ -16,12 +16,8 @@ services:
             - "2888"
             - "3888"
         hostname: zk0
-        extra_hosts:
-            - "zk1: 172.21.1.11"
-            - "zk2: 172.21.1.12"
         networks:
-            zookeeper-network:
-                ipv4_address: 172.21.1.10
+            cluster-network:
                 aliases:
                     - zk0
         depends_on:
@@ -41,12 +37,8 @@ services:
             - "2888"
             - "3888"
         hostname: zk1
-        extra_hosts:
-            - "zk0: 172.21.1.10"
-            - "zk2: 172.21.1.12"
         networks:
-            zookeeper-network:
-                ipv4_address: 172.21.1.11
+            cluster-network:
                 aliases:
                     - zk1
     zk2:
@@ -63,17 +55,13 @@ services:
             - "2888"
             - "3888"
         hostname: zk2
-        extra_hosts:
-            - "zk0: 172.21.1.10"
-            - "zk1: 172.21.1.11"
         networks:
-            zookeeper-network:
-                ipv4_address: 172.21.1.12
+            cluster-network:
                 aliases:
                     - zk2
 networks:
-    zookeeper-network:
+    cluster-network:
         driver: bridge
         ipam:
             config:
-                - subnet: 172.21.1.0/24
+                - subnet: 172.88.0.0/16

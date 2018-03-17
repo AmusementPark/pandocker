@@ -8,25 +8,23 @@ services:
         stdin_open: true
         volumes:
             # 映射 hdfs 文件目录
-            # /data/hadoop-master/data/hadoop/zookeeper:/data/hadoop/zookeeper
-            - /data/hadoop-master/data:/data/
+            - /data/hadoop/master/:/data/
+            # 映射配置文件
+            - ../conf:/usr/local/.jenv/candidates/hbase/current/conf
         ports:
             # hadoop 相关端口映射
             - "50070:50070"
             - "8088:8088"
             # hbase 相关端口映射
+            - "16000"
+            - "16020"
             - "16010:16010"
             - "16030:16030"
         hostname: hadoop-master
-        extra_hosts:
-            - "hadoop-slave1: 172.19.0.11"
-            - "hadoop-slave2: 172.19.0.12"
-            - "hadoop-slave3: 172.19.0.13"
         networks:
-            hbase-network:
-                ipv4_address: 172.19.0.10
+            cluster-network:
                 aliases:
-                    - hmaster
+                    - hadoop-master
         depends_on:
             - hregionserver1
             - hregionserver2
@@ -38,22 +36,19 @@ services:
         tty: true
         stdin_open: true
         volumes:
-            # 映射 hdfs 文件目录
-            - /data/hadoop-slave1/data:/data/
+            - /data/hadoop/slave1/:/data/
+            - ../conf:/usr/local/.jenv/candidates/hbase/current/conf
         ports:
             # hbase 相关端口随机映射
+            - "16000"
+            - "16020"
             - "16010"
             - "16030"
         hostname: hadoop-slave1
-        extra_hosts:
-            - "hadoop-master: 172.19.0.10"
-            - "hadoop-slave2: 172.19.0.12"
-            - "hadoop-slave3: 172.19.0.13"
         networks:
-            hbase-network:
-                ipv4_address: 172.19.0.11
+            cluster-network:
                 aliases:
-                    - hregionserver1
+                    - hadoop-slave1
     hregionserver2:
         image: ilpan/apache-hbase
         container_name: hbase-regionserver2
@@ -61,20 +56,18 @@ services:
         tty: true
         stdin_open: true
         volumes:
-            - /data/hadoop-slave2/data:/data/
+            - /data/hadoop/slave2/data:/data/
+            - ../conf:/usr/local/.jenv/candidates/hbase/current/conf
         ports:
+            - "16000"
+            - "16020"
             - "16010"
             - "16030"
         hostname: hadoop-slave2
-        extra_hosts:
-            - "hadoop-master: 172.19.0.10"
-            - "hadoop-slave1: 172.19.0.11"
-            - "hadoop-slave3: 172.19.0.13"
         networks:
-            hbase-network:
-                ipv4_address: 172.19.0.12
+            cluster-network:
                 aliases:
-                    - hregionserver2
+                    - hadoop-slave2
     hregionserver3:
         image: ilpan/apache-hbase
         container_name: hbase-regionserver3
@@ -82,23 +75,22 @@ services:
         tty: true
         stdin_open: true
         volumes:
-            - /data/hadoop-slave3/data:/data
+            - /data/hadoop/slave3/:/data
+            - ../conf:/usr/local/.jenv/candidates/hbase/current/conf
         ports:
+            - "16000"
+            - "16020"
             - "16010"
             - "16030"
         hostname: hadoop-slave3
-        extra_hosts:
-            - "hadoop-master: 172.19.0.10"
-            - "hadoop-slave1: 172.19.0.11"
-            - "hadoop-slave2: 172.19.0.12"
         networks:
-            hbase-network:
-                ipv4_address: 172.19.0.13
+            cluster-network:
                 aliases:
-                    - hregionserver3
+                    - hadoop-slave3
+
 networks:
-    hbase-network:
+    cluster-network:
         driver: bridge
         ipam:
             config:
-                - subnet: 172.19.0.0/24
+                - subnet: 172.88.0.0/16
