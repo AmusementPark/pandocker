@@ -31,7 +31,7 @@ function login_without_passwd() {
     do
         docker exec -it ${hbase} bash -c "sudo mkdir -p /data/ && sudo chown -R hdp:hadoop /data/"
         docker exec -it ${hbase} bash -c "sudo sed -i 's/.*StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/ssh_config"
-        docker exec -it ${hbase} bash -c "ssh-keygen &&  chmod 700 /home/hdp/.ssh && chmod 600 /home/hdp/.ssh/id_rsa && cat /home/hdp/.ssh/id_rsa.pub >> /home/hdp/.ssh/authorized_keys && chmod 644 /home/hdp/.ssh/authorized_keys"
+        docker exec -it ${hbase} bash -c "ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa &&  chmod 700 /home/hdp/.ssh && chmod 600 /home/hdp/.ssh/id_rsa && cat /home/hdp/.ssh/id_rsa.pub >> /home/hdp/.ssh/authorized_keys && chmod 644 /home/hdp/.ssh/authorized_keys"
     done
     # hadoop-master & hadoop-slave* 是主机名，为了与 ilpan/apache-hadoop中的配置一致 (虽然也可以修改)
     docker exec -it hbase-master bash -c "ssh-copy-id hadoop-slave1 && ssh-copy-id hadoop-slave2 && ssh-copy-id hadoop-slave3"

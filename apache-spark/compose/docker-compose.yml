@@ -51,6 +51,7 @@ services:
         stdin_open: true
         volumes:
             - /data/spark/worker2:/data/spark
+            - ../conf:/usr/local/.jenv/candidates/spark/current/conf/
         ports:
             - "8080"
             - "7077"
@@ -68,6 +69,7 @@ services:
         stdin_open: true
         volumes:
             - /data/spark/worker3:/data/spark
+            - ../conf:/usr/local/.jenv/candidates/spark/current/conf/
         ports:
             - "8080"
             - "7077"
