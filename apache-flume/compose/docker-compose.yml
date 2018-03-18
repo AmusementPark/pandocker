@@ -9,7 +9,7 @@ services:
         volumes:
             - ../conf:/usr/local/.jenv/candidates/flume/current/conf
         ports:
-            - "2018"
+            - "2018:2018"
         hostname: flume-tier1-1
         networks:
             cluster-network:
@@ -24,7 +24,7 @@ services:
         volumes:
             - ../conf:/usr/local/.jenv/candidates/flume/current/conf/
         ports:
-            - "2018"
+            - "2019:2018"
         hostname: flume-tier1-2
         networks:
             cluster-network:
@@ -39,7 +39,7 @@ services:
         volumes:
             - ../conf:/usr/local/.jenv/candidates/flume/current/conf
         ports:
-            - "2018"
+            - "2020:2018"
         hostname: flume-tier1-3
         networks:
             cluster-network:
@@ -54,7 +54,7 @@ services:
         volumes:
             - ../conf:/usr/local/.jenv/candidates/flume/current/conf
         ports:
-            - "2018"
+            - "2021:2018"
         hostname: flume-tier1-4
         networks:
             cluster-network:
