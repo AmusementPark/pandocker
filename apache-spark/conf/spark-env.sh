@@ -66,11 +66,11 @@
 # - SPARK_NO_DAEMONIZE  Run the proposed command in the foreground. It will not output a PID file.
 
 export JAVA_HOME=/usr/local/.jenv/candidates/java/current
-# export SCALA_HOME=/usr/local/.jenv/candidates/scala/current
-export HADOOP_HOME=/usr/local/.jenv/candidates/hadoop/current
-export HADOOP_CONF_DIR=/usr/local/.jenv/candidates/hadoop/current/etc/hadoop
-# export SPARK_MASTER_IP=spark-master
-export SPARK_MASTER_IP=hadoop-master
+# export HADOOP_HOME=/usr/local/.jenv/candidates/hadoop/current
+# export HADOOP_CONF_DIR=/usr/local/.jenv/candidates/hadoop/current/etc/hadoop
+export SPARK_MASTER_HOST=spark-master
+export SPARK_MASTER_PORT=7077
 export SPARK_WORKER_MEMORY=1g       # 每个worker结点能够最大分配给executors的内存大小，依据自己的机器而定
 export SPARK_WORKER_CORES=2         # 每个worker结点所占有的CPU核数目
+export SPARK_WORKER_MEMORY=512m     # set how much total memory workers have to give executors (e.g. 1000m, 2g)
 export SPARK_WORKER_INSTANCES=1     # 每台机器上开启worker结点的数目

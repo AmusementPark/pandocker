@@ -7,25 +7,17 @@ services:
         tty: true
         stdin_open: true
         volumes:
-            # 映射 hdfs 文件目录
-            # /data/hadoop-master/data/hadoop/zookeeper:/data/hadoop/zookeeper
-            - /data/hadoop-master/data:/data/
+            # 该目录将来用
+            - /data/spark/master:/data/spark
+            - ../conf:/usr/local/.jenv/candidates/spark/current/conf/
         ports:
-            # hadoop 相关端口映射
-            - "50070:50070"
-            - "8088:8088"
             # spark 相关端口映射
             - "8080:8080"
             - "7077:7077"
             - "4040:4040"
-        hostname: hadoop-master
-        extra_hosts:
-            - "hadoop-slave1: 172.20.0.11"
-            - "hadoop-slave2: 172.20.0.12"
-            - "hadoop-slave3: 172.20.0.13"
+        hostname: spark-master
         networks:
-            spark-network:
-                ipv4_address: 172.20.0.10
+            cluster-network:
                 aliases:
                     - spark-master
         depends_on:
@@ -39,21 +31,16 @@ services:
         tty: true
         stdin_open: true
         volumes:
-            # 映射 hdfs 文件目录
-            - /data/hadoop-slave1/data:/data/
+            - /data/spark/worker1:/data/spark
+            - ../conf:/usr/local/.jenv/candidates/spark/current/conf/
         ports:
             # spark 相关端口随机映射
             - "8080"
             - "7077"
             - "4040"
-        hostname: hadoop-slave1
-        extra_hosts:
-            - "hadoop-master: 172.20.0.10"
-            - "hadoop-slave2: 172.20.0.12"
-            - "hadoop-slave3: 172.20.0.13"
+        hostname: spark-worker1
         networks:
-            spark-network:
-                ipv4_address: 172.20.0.11
+            cluster-network:
                 aliases:
                     - spark-worker1
     spark-worker2:
@@ -63,19 +50,14 @@ services:
         tty: true
         stdin_open: true
         volumes:
-            - /data/hadoop-slave2/data:/data/
+            - /data/spark/worker2:/data/spark
         ports:
             - "8080"
             - "7077"
             - "4040"
-        hostname: hadoop-slave2
-        extra_hosts:
-            - "hadoop-master: 172.20.0.10"
-            - "hadoop-slave1: 172.20.0.11"
-            - "hadoop-slave3: 172.20.0.13"
+        hostname: spark-worker2
         networks:
-            spark-network:
-                ipv4_address: 172.20.0.12
+            cluster-network:
                 aliases:
                     - spark-worker2
     spark-worker3:
@@ -85,24 +67,19 @@ services:
         tty: true
         stdin_open: true
         volumes:
-            - /data/hadoop-slave3/data:/data
+            - /data/spark/worker3:/data/spark
         ports:
             - "8080"
             - "7077"
             - "4040"
-        hostname: hadoop-slave3
-        extra_hosts:
-            - "hadoop-master: 172.20.0.10"
-            - "hadoop-slave1: 172.20.0.11"
-            - "hadoop-slave2: 172.20.0.12"
+        hostname: spark-worker3
         networks:
-            spark-network:
-                ipv4_address: 172.20.0.13
+            cluster-network:
                 aliases:
                     - spark-worker3
 networks:
-    spark-network:
+    cluster-network:
         driver: bridge
         ipam:
             config:
-                - subnet: 172.20.0.0/24
+                - subnet: 172.88.0.0/16

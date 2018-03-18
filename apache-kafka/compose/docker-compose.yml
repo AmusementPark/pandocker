@@ -1,0 +1,57 @@
+version: '3'
+services:
+    kafka0:
+        image: ilpan/apache-kafka
+        container_name: kafka0
+        command: "sudo /usr/sbin/sshd -D"
+        tty: true
+        stdin_open: true
+        volumes:
+            - /data/kafka/k0:/data/kafka/
+        ports:
+            # kafka 相关端口映射
+            - "9092"
+        hostname: kafka0
+        networks:
+            cluster-network:
+                aliases:
+                    - kafka0
+        depends_on:
+            - kafka1
+            - kafka2
+    kafka1:
+        image: ilpan/apache-kafka
+        container_name: kafka1
+        command: "sudo /usr/sbin/sshd -D"
+        tty: true
+        stdin_open: true
+        volumes:
+            - /data/kafka/k1:/data/kafka/
+        ports:
+            - "9092"
+        hostname: kafka1
+        networks:
+            cluster-network:
+                aliases:
+                    - kafka1
+    kafka2:
+        image: ilpan/apache-kafka
+        container_name: kafka2
+        command: "sudo /usr/sbin/sshd -D"
+        tty: true
+        stdin_open: true
+        volumes:
+            - /data/kafka/k2:/data/kafka
+        ports:
+            - "9092"
+        hostname: kafka2
+        networks:
+            cluster-network:
+                aliases:
+                    - kafka2
+networks:
+    cluster-network:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.88.0.0/16

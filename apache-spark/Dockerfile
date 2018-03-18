@@ -1,6 +1,6 @@
 # apache spark
 
-FROM ilpan/apache-hadoop
+FROM ilpan/base-java
 MAINTAINER ilpan<pna.dev@outlook.com>
 
 ENV CANDIDATES /usr/local/.jenv/candidates
@@ -14,9 +14,6 @@ RUN cd /tmp && \
         source "${HOME}/.jenv/bin/jenv-init.sh" && \
         jenv default spark 2.3.0-hadoop2.7 && \
         rm -rf /tmp/*
-
-COPY ./conf/slaves $SPARK_HOME/conf/
-COPY ./conf/spark-env.sh $SPARK_HOME/conf/
 
 EXPOSE 8080 7077 4040
 
