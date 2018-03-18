@@ -45,6 +45,21 @@ services:
             cluster-network:
                 aliases:
                     - flume-tier1-3
+    flume-tier1-4:
+        image: ilpan/apache-flume
+        container_name: flume-tier1-4
+        command: "sudo /usr/sbin/sshd -D"
+        tty: true
+        stdin_open: true
+        volumes:
+            - ../conf:/usr/local/.jenv/candidates/flume/current/conf
+        ports:
+            - "2018"
+        hostname: flume-tier1-4
+        networks:
+            cluster-network:
+                aliases:
+                    - flume-tier1-4
 
     flume-tier2-1:
         image: ilpan/apache-flume

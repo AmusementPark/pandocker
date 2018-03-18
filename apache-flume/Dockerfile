@@ -1,4 +1,4 @@
-# Apache Zookeeper
+# Apache Flume
 
 FROM ilpan/base-java
 MAINTAINER ilpan<pna.dev@outlook.com>
