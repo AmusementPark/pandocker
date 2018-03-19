@@ -5,8 +5,7 @@ MAINTAINER ilpan<pna.dev@outlook.com>
 RUN groupadd -r hadoop && useradd -r hdp -g hadoop -d /home/hdp && \ 
         mkdir /home/hdp && chown -R hdp:hadoop /home/hdp && \ 
         sed -i '/root.*ALL=(ALL.*).*ALL/a\hdp ALL=(ALL) NOPASSWD:ALL' /etc/sudoers && \ 
-        echo hdp:123456 | chpasswd && \
-        chmod 666 /etc/hosts
+        echo 'hdp: ' | chpasswd && \
 USER hdp
 WORKDIR /home/hdp
 
@@ -20,3 +19,6 @@ RUN curl -L -s get.jenv.io | bash && \
 RUN  source "${HOME}/.jenv/bin/jenv-init.sh" && \ 
         jenv install java 1.8.0_112 && \ 
         rm -rf /usr/local/.jenv/archives/*
+
+# enable ssh service here again
+CMD ["sudo /usr/sbin/sshd", "-D"]
