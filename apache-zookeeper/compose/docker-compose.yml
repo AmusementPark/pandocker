@@ -3,9 +3,6 @@ services:
     zk0:
         image: ilpan/apache-zookeeper
         container_name: zk0
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
             # 映射 zookpeper 数据和配置文件
             - /data/zookeeper/zk0:/data/zookeeper/
@@ -26,9 +23,6 @@ services:
     zk1:
         image: ilpan/apache-zookeeper
         container_name: zk1
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
             - /data/zookeeper/zk1:/data/zookeeper/
             - ../conf:/usr/local/.jenv/candidates/zookeeper/current/conf/
@@ -44,9 +38,6 @@ services:
     zk2:
         image: ilpan/apache-zookeeper
         container_name: zk2
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
             - /data/zookeeper/zk2:/data/zookeeper
             - ../conf:/usr/local/.jenv/candidates/zookeeper/current/conf

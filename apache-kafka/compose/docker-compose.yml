@@ -3,9 +3,6 @@ services:
     kafka0:
         image: ilpan/apache-kafka
         container_name: kafka0
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
             - /data/kafka/k0:/data/kafka/
         ports:
@@ -22,9 +19,6 @@ services:
     kafka1:
         image: ilpan/apache-kafka
         container_name: kafka1
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
             - /data/kafka/k1:/data/kafka/
         ports:
@@ -37,9 +31,6 @@ services:
     kafka2:
         image: ilpan/apache-kafka
         container_name: kafka2
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
             - /data/kafka/k2:/data/kafka
         ports:

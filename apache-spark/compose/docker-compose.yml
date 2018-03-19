@@ -3,9 +3,6 @@ services:
     spark-master:
         image: ilpan/apache-spark
         container_name: spark-master
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
             # 该目录将来用
             - /data/spark/master:/data/spark
@@ -27,9 +24,6 @@ services:
     spark-worker1:
         image: ilpan/apache-spark
         container_name: spark-worker1
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
             - /data/spark/worker1:/data/spark
             - ../conf:/usr/local/.jenv/candidates/spark/current/conf/
@@ -46,9 +40,6 @@ services:
     spark-worker2:
         image: ilpan/apache-spark
         container_name: spark-worker2
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
             - /data/spark/worker2:/data/spark
             - ../conf:/usr/local/.jenv/candidates/spark/current/conf/
@@ -64,9 +55,6 @@ services:
     spark-worker3:
         image: ilpan/apache-spark
         container_name: spark-worker3
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
             - /data/spark/worker3:/data/spark
             - ../conf:/usr/local/.jenv/candidates/spark/current/conf/

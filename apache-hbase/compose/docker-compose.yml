@@ -3,18 +3,17 @@ services:
     hmaster:
         image: ilpan/apache-hbase
         container_name: hbase-master
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
             # 映射 hdfs 文件目录
-            - /data/hadoop/master/:/data/
+            - /data/hadoop/master:/data/hadoop
             # 映射配置文件
             - ../conf:/usr/local/.jenv/candidates/hbase/current/conf
         ports:
-            # hadoop 相关端口映射
+            # hdfs nn
             - "50070:50070"
+            # yarn rm
             - "8088:8088"
+            - "8042"
             # hbase 相关端口映射
             - "16000"
             - "16020"
@@ -32,13 +31,14 @@ services:
     hregionserver1:
         image: ilpan/apache-hbase
         container_name: hbase-regionserver1
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
-            - /data/hadoop/slave1/:/data/
+            - /data/hadoop/slave1:/data/hadoop
             - ../conf:/usr/local/.jenv/candidates/hbase/current/conf
         ports:
+            # hdfs dn
+            - "50075"
+            # for yarn
+            - "8042"
             # hbase 相关端口随机映射
             - "16000"
             - "16020"
@@ -52,13 +52,12 @@ services:
     hregionserver2:
         image: ilpan/apache-hbase
         container_name: hbase-regionserver2
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
-            - /data/hadoop/slave2/data:/data/
+            - /data/hadoop/slave2/data:/data/hadoop
             - ../conf:/usr/local/.jenv/candidates/hbase/current/conf
         ports:
+            - "50075"
+            - "8042"
             - "16000"
             - "16020"
             - "16010"
@@ -71,13 +70,12 @@ services:
     hregionserver3:
         image: ilpan/apache-hbase
         container_name: hbase-regionserver3
-        command: "sudo /usr/sbin/sshd -D"
-        tty: true
-        stdin_open: true
         volumes:
-            - /data/hadoop/slave3/:/data
+            - /data/hadoop/slave3:/data/hadoop
             - ../conf:/usr/local/.jenv/candidates/hbase/current/conf
         ports:
+            - "50075"
+            - "8042"
             - "16000"
             - "16020"
             - "16010"

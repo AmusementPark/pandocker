@@ -5,7 +5,7 @@ MAINTAINER ilpan<pna.dev@outlook.com>
 RUN groupadd -r hadoop && useradd -r hdp -g hadoop -d /home/hdp && \ 
         mkdir /home/hdp && chown -R hdp:hadoop /home/hdp && \ 
         sed -i '/root.*ALL=(ALL.*).*ALL/a\hdp ALL=(ALL) NOPASSWD:ALL' /etc/sudoers && \ 
-        echo 'hdp: ' | chpasswd && \
+        echo 'hdp: ' | chpasswd
 USER hdp
 WORKDIR /home/hdp
 
