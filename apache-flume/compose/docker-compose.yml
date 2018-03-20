@@ -54,8 +54,6 @@ services:
         container_name: flume-tier2-1
         volumes:
             - ../conf:/usr/local/.jenv/candidates/flume/current/conf
-        ports:
-            - "2018"
         hostname: flume-tier2-1
         networks:
             cluster-network:
@@ -66,8 +64,6 @@ services:
         container_name: flume-tier2-2
         volumes:
             - ../conf:/usr/local/.jenv/candidates/flume/current/conf/
-        ports:
-            - "2018"
         hostname: flume-tier2-2
         networks:
             cluster-network:

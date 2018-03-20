@@ -36,7 +36,7 @@ function start_daemon() {
     
     for agent in ${tier1[@]}
     do
-        docker exec -itd flume-${agent} bash -c "source ${jenv_init} && flume-ng agent -n a1 -c ${conf_dir} -f ${conf_dir}/${agent}.properties"
+        docker exec -itd flume-${agent} bash -c "source ${jenv_init} && flume-ng agent -n a1 -c ${conf_dir} -f ${conf_dir}/tier1.properties"
     done
 }
 
