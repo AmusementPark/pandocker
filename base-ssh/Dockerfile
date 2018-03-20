@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y unzip net-tools \
 
 RUN echo 'root:root' |chpasswd
 
+# change default shell
+RUN usermod -s /bin/bash root
+
 # ssh service
 RUN mkdir -p /var/run/sshd
 
