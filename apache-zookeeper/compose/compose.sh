@@ -36,7 +36,7 @@ function start_daemon() {
 function init() {
     for id in ${zks[@]}
     do
-        docker exec -itd zk$id bash -c "sudo chown -R hdp:hadoop /data/ && echo $id > $dataDir/myid"
+        docker exec -itd zk$id bash -c "echo $id > $dataDir/myid"
     done
     start_daemon
 }

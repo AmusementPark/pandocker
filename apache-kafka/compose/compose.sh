@@ -28,7 +28,7 @@ function create_cluster() {
 function start_daemon() {
     for id in ${ids[@]}
     do
-        docker exec -itd kafka$id bash -c "source /usr/local/.jenv/bin/jenv-init.sh && kafka-server-start.sh -daemon /home/hdp/server.properties"
+        docker exec -itd kafka$id bash -c "source /usr/local/.jenv/bin/jenv-init.sh && kafka-server-start.sh -daemon ~/server.properties"
     done
 }
 
@@ -36,8 +36,7 @@ function start_daemon() {
 function init() {
     for id in ${ids[@]}
     do
-        docker exec -itd kafka$id bash -c "sudo chown -R hdp:hadoop /data/"
-        docker cp ../conf/server$id.properties kafka${id}:/home/hdp/server.properties
+        docker cp ../conf/server$id.properties kafka${id}:~/server.properties
     done
     start_daemon
 }

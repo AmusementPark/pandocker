@@ -24,23 +24,6 @@ function create_cluster() {
     docker-compose up -d hmaster 
 }
 
-
-# 配置容器间免密登录
-function login_without_passwd() {
-    for hbase in ${hbases[@]}
-    do
-        docker exec -it ${hbase} bash -c "sudo mkdir -p /data/ && sudo chown -R hdp:hadoop /data/"
-        docker exec -it ${hbase} bash -c "sudo sed -i 's/.*StrictHostKeyChecking ask/StrictHostKeyChecking no/' /etc/ssh/ssh_config"
-        docker exec -it ${hbase} bash -c "ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa &&  chmod 700 /home/hdp/.ssh && chmod 600 /home/hdp/.ssh/id_rsa && cat /home/hdp/.ssh/id_rsa.pub >> /home/hdp/.ssh/authorized_keys && chmod 644 /home/hdp/.ssh/authorized_keys"
-    done
-    # hadoop-master & hadoop-slave* 是主机名，为了与 ilpan/apache-hadoop中的配置一致 (虽然也可以修改)
-    docker exec -it hbase-master bash -c "ssh-copy-id hadoop-slave1 && ssh-copy-id hadoop-slave2 && ssh-copy-id hadoop-slave3"
-    docker exec -it hbase-regionserver1 bash -c "ssh-copy-id hadoop-master && ssh-copy-id hadoop-slave2 && ssh-copy-id hadoop-slave3"
-    docker exec -it hbase-regionserver2 bash -c "ssh-copy-id hadoop-master && ssh-copy-id hadoop-slave1 && ssh-copy-id hadoop-slave3"
-    docker exec -it hbase-regionserver3 bash -c "ssh-copy-id hadoop-master && ssh-copy-id hadoop-slave1 && ssh-copy-id hadoop-slave2"
-}
-
-# cd 后面的指令还是在当前目录下执行的
 # 手动进入zookeeper目录启动
 function start_zk_cluster() {
 #    # 直接通过判断是否存在 zk network来判断是否存在zk cluster
@@ -59,24 +42,23 @@ function start_zk_cluster() {
 
 function start_daemon() {
     # 1) 启动 hadoop 集群
-    docker exec -it hbase-master bash -c "source /home/hdp/.jenv/bin/jenv-init.sh && jenv cd hadoop && sbin/start-all.sh && jps"
+    docker exec -it hbase-master bash -c "source ~/.jenv/bin/jenv-init.sh && jenv cd hadoop && sbin/start-all.sh && jps"
     # 2) 启动 zookeeper 集群
     start_zk_cluster
     # 3) 启动hbase
-    docker exec -it hbase-master bash -c "source /home/hdp/.jenv/bin/jenv-init.sh && start-hbase.sh && jps"
+    docker exec -it hbase-master bash -c "source ~/.jenv/bin/jenv-init.sh && start-hbase.sh && jps"
     # 启动 backup master
     # docker exec -it hbase-regionserver1 bash -c "source /home/hdp/.jenv/bin/jenv-init.sh && hbase-daemon.sh start master && jps"
 }
 
 # 初始化
 function init() {
-    docker exec -it hbase-master bash -c "source /home/hdp/.jenv/bin/jenv-init.sh && hadoop namenode -format"
+    docker exec -it hbase-master bash -c "source /usr/local/.jenv/bin/jenv-init.sh && hadoop namenode -format"
     start_daemon
 }
 
 function init_cluster() {
     create_cluster
-    login_without_passwd
     init
 }
 
@@ -101,7 +83,7 @@ function stop_daemon() {
     # 2) 关闭 ZK cluster
     stop_zk_cluster
     # 3）关闭 hadoop 集群
-    docker exec -it hbase-master bash -c "source /home/hdp/.jenv/bin/jenv-init.sh && stop-hbase.sh && jenv cd hadoop && sbin/stop-all.sh"
+    docker exec -it hbase-master bash -c "source ~/.jenv/bin/jenv-init.sh && stop-hbase.sh && jenv cd hadoop && sbin/stop-all.sh"
 }
 
 function stop_cluster() {

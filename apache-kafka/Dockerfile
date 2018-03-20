@@ -3,8 +3,6 @@
 FROM ilpan/base-java
 MAINTAINER ilpan<pna.dev@outlook.com>
 
-USER hdp
-
 ENV JENV_HOME /usr/local/.jenv
 ENV KAFKA_HOME $JENV_HOME/candidates/kafka
 

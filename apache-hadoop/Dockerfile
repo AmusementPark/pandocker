@@ -3,11 +3,9 @@
 FROM ilpan/base-java
 MAINTAINER ilpan<pna.dev@outlook.com>
 
-USER hdp
-
 RUN source "${HOME}/.jenv/bin/jenv-init.sh" && \ 
-        jenv install hadoop 2.7.2 && \ 
-        rm -rf /usr/local/.jenv/archives/*
+    jenv install hadoop 2.7.2 && \ 
+    rm -rf /usr/local/.jenv/archives/*
 
 ENV HADOOP_HOME /usr/local/.jenv/candidates/hadoop/current/
 
