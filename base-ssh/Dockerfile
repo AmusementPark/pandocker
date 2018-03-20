@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 MAINTAINER ilpan<pna.dev@outlook.com>
 
 RUN apt-get update && apt-get install -y unzip net-tools \ 
-    openssh-server openssh-client rsync wget axel tar && \ 
+    openssh-server openssh-client rsync wget axel tar curl && \ 
     apt-get clean
 
 RUN echo 'root:root' |chpasswd

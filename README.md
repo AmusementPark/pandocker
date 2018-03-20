@@ -3,7 +3,7 @@
 
 ## How to use
 
-First of all: clone this repo
+First of all: clone this repo</br>
 **Recommends**：`$ docker pull ilpan/base-java`*before* you run the following clusters
 
 
@@ -28,9 +28,9 @@ And you can enter `$ ./compose.sh -h` for more usage about compose.sh.
 
 ### running results
 `$ dokcer ps`</br>
-![docker_ps](https://github.com/ilpan/pandocker/blob/master/images/docker_ps_result.png)
+![docker_ps](https://raw.githubusercontent.com/ilpan/pandocker/master/images/docker_ps_result.png)
 `$ ping`</br>
-![ping_info](https://github.com/ilpan/pandocker/blob/master/images/ping_result.png)
+![ping_info](https://raw.githubusercontent.com/ilpan/pandocker/master/images/ping_result.png)
 
 ---
 
