@@ -21,7 +21,7 @@ tier1=("tier1-1" "tier1-2" "tier1-3" "tier1-4")
 tier2=("tier2-1" "tier2-2")
 
 conf_dir="/usr/local/.jenv/candidates/flume/current/conf/"
-jenv_init="/usr/local/.jenv/bin/jenv_init.sh"
+jenv_init="/usr/local/.jenv/bin/jenv-init.sh"
 
 # 创建并启动容器
 function create_cluster() {
@@ -31,12 +31,12 @@ function create_cluster() {
 function start_daemon() {
     for agent in ${tier2[@]}
     do
-        docker exec -itd flume-${agent} bash -c "source ${jenv_init} && flume-ng agent -n a1 -c ${conf_dir} -f ${agent}.properties &"
+        docker exec -itd flume-${agent} bash -c "source ${jenv_init} && flume-ng agent -n a1 -c ${conf_dir} -f ${conf_dir}/${agent}.properties"
     done
     
     for agent in ${tier1[@]}
     do
-        docker exec -itd flume-${agent} bash -c "source ${jenv_init} && flume-ng agent -n a1 -c ${conf_dir} -f ${agent}.properties &"
+        docker exec -itd flume-${agent} bash -c "source ${jenv_init} && flume-ng agent -n a1 -c ${conf_dir} -f ${conf_dir}/${agent}.properties"
     done
 }
 

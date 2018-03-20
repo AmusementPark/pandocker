@@ -28,7 +28,7 @@ function create_cluster() {
 function start_daemon() {
     for id in ${ids[@]}
     do
-        docker exec -itd kafka$id bash -c "source /usr/local/.jenv/bin/jenv-init.sh && kafka-server-start.sh -daemon ~/server.properties"
+        docker exec -itd kafka$id bash -c "source /usr/local/.jenv/bin/jenv-init.sh && kafka-server-start.sh /root/server.properties"
     done
 }
 
@@ -36,7 +36,7 @@ function start_daemon() {
 function init() {
     for id in ${ids[@]}
     do
-        docker cp ../conf/server$id.properties kafka${id}:~/server.properties
+        docker cp ../conf/server$id.properties kafka${id}:/root/server.properties
     done
     start_daemon
 }
@@ -74,7 +74,7 @@ function remove_cluster() {
 case "$1" in
     "-i"|"init")
         init_cluster
-        echo "### zookeeper 集群成功初始化并启动 ###"
+        echo "### kafka 集群成功初始化并启动 ###"
         ;;
     "-s"|"start")
         start_cluster
