@@ -11,6 +11,5 @@ RUN cd /tmp && \
     mkdir $CANDIDATES/spark && \
     tar -xzf spark-2.3.0-bin-hadoop2.7.tgz -C ${CANDIDATES}/spark/ && \
     cd $CANDIDATES && mv ./spark/spark-2.3.0-bin-hadoop2.7 ./spark/2.3.0-hadoop2.7 && \
-    source "${HOME}/.jenv/bin/jenv-init.sh" && \
-    jenv default spark 2.3.0-hadoop2.7 && \
+    bash -c "source ~/.jenv/bin/jenv-init.sh && jenv default spark 2.3.0-hadoop2.7" && \
     rm -rf /tmp/*
