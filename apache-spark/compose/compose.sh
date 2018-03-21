@@ -33,7 +33,6 @@ function start_daemon() {
 
 function init_cluster() {
     create_cluster
-    login_without_passwd
     start_daemon
 }
 
